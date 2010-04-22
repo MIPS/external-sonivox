@@ -37,6 +37,18 @@
 
 #include "eas_wave.h"
 
+#include <endian.h>
+
+#if !defined(__BYTE_ORDER) || !defined (__BIG_ENDIAN)
+#error __BYTE_ORDER macros not defined
+#endif
+
+/*                                                                                                                    * this package uses #ifdef _BIG_ENDIAN, which is _always_ defined within endian.h                                    * regardless of endianity. This fragment sets the macro correctly                                                    */
+#undef _BIG_ENDIAN
+#if __BYTE_ORDER == __BIG_ENDIAN
+#define _BIG_ENDIAN
+#endif
+
 /* .WAV file format tags */
 const EAS_U32 riffTag = 0x46464952;
 const EAS_U32 waveTag = 0x45564157;
